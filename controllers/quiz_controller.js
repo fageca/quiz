@@ -1,7 +1,7 @@
 var models = require('../models/models.js');
 
 
-//Autoloas
+//Autoloads
 exports.load = function(req, res, next, quizId) {
     //console.log('hola1');
     models.Quiz.find(quizId).success(
@@ -13,7 +13,6 @@ exports.load = function(req, res, next, quizId) {
                 } else { next (new Error('No existe quizId='+quizId));}
             }
          )
-         .catch(function(error) {next(error);});
 };
 
 //Get /quizes/
