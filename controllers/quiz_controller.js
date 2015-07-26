@@ -17,12 +17,21 @@ exports.load = function(req, res, next, quizId) {
 
 //Get /quizes/
 exports.index = function(req,res){
-
-        	models.Quiz.findAll().success(function(quizes) {
-		res.render('quizes/index.ejs',{quizes:quizes});
-	})//.catch(function(error) { next(error); })
-        
-    
+  //console.log(req);
+  buscar = req.query.buscar;
+  console.log('El valor de buscar='+buscar);
+  if(buscar) {
+    buscar = buscar.replace(/\s/g,"%");
+    models.Quiz.findAll({where: ["pregunta LIKE '%"+buscar+"%'"], order: 'pregunta ASC'}).then(function(quizes){
+      res.render('quizes/index', {quizes: quizes, errors: []});  
+    })
+    .catch(function(error) {next(error);});
+  } else {
+    models.Quiz.findAll().then(function(quizes){
+      res.render('quizes/index', {quizes: quizes, errors: []});  
+    })
+    .catch(function(error) {next(error);});
+  }
 };
 
 

@@ -1,6 +1,13 @@
 <p>Bienvenido</p>
 <p> El portal para juegos</p>
 -------------------------------------------------------------------
+<p>
+    <form method="get" action="/quizes">
+      <p>Busqueda de preguntas:</p>
+      <input type="text" name="buscar" placeholder="Texto a buscar" />
+      <input type="submit" value="Enviar"/>
+    </form>
+</p>
 
 <table>
 <% var i; for (i=0; i < quizes.length; i++) { %>
