@@ -3,16 +3,16 @@ var models = require('../models/models.js');
 
 //Autoloads
 exports.load = function(req, res, next, quizId) {
-    //console.log('hola1');
-    models.Quiz.find(quizId).success(
-            function (quiz){
-                if (quiz){
-                    //console.log(quiz);
-                    req.quiz = quiz;
-                    next();
-                } else { next (new Error('No existe quizId='+quizId));}
-            }
-         )
+  models.Quiz.find({
+    where: { id: Number(quizId) },
+    include: [{ model: models.Comment}]
+  }).then(function(quiz) {
+    if(quiz) {
+      req.quiz = quiz;
+      next();
+    } else { next(new Error('No existe quizId=' + quizId));}
+  })
+  .catch(function(error) {next(error);});
 };
 
 //Get /quizes/
